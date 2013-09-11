@@ -26,10 +26,12 @@ public class WeightedQuickUnion {
 	while (root != Id[root])
             root = Id[root];
 
+	int t;
 	while (p != Id[p])
 	{
+	    t = p;
 	    p = Id[p];
-	    Id[p] = root;
+	    Id[t] = root;
 	}
 
         return root;
