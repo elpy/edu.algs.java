@@ -1,4 +1,7 @@
 import java.util.*;
+import java.awt.*;
+import java.awt.geom.*;
+import javax.swing.*;
 
 public class QuickFind{
 
@@ -22,18 +25,24 @@ public class QuickFind{
 	return Find(p) == Find(q);
     }
 
-    private void Union(int p, int q){
+    private int Union(int p, int q){
 	int pRoot = Find(p);
 	int qRoot = Find(q);
+	int cost = 2;
 
 	if (qRoot == pRoot)
-	    return;
+	    return cost;
 
 	for (int i = 0; i < Id.length; i++)
-	    if (Id[i] == pRoot)
+	    if (Id[i] == pRoot){
 		Id[i] = qRoot;
+		cost += 2;
+	    } 
+	    else cost++;
 
 	Count--;
+
+	return cost;
     }
     
     @Override
@@ -45,19 +54,45 @@ public class QuickFind{
     //static
 
     public static void main(String[] args){
-	QuickFind qf = new QuickFind(10);
+	EventQueue.invokeLater(new Runnable(){
+		public void run(){
+		    JFrame frame = new JFrame();
+		    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		    frame.setTitle("QuickFind");
+		    frame.setSize(800, 600);
 
-	qf.Union(4, 5);	
-	System.out.println(qf);
-	qf.Union(6, 7);	
-	System.out.println(qf);
-	qf.Union(7, 8);	
-	System.out.println(qf);
-	qf.Union(5, 6);	
-	System.out.println(qf);
-	qf.Union(0, 1);	
-	System.out.println(qf);
-	qf.Union(1, 8);	
-	System.out.println(qf);
+		    QuickFind qf = new QuickFind(10);
+		    int totalCost = 0, cost = 0;
+		    
+		    Chart chart = new Chart();
+		    
+		    cost = qf.Union(4, 5);
+		    chart.AddPoint(cost);
+		    totalCost += cost;
+
+		    cost = qf.Union(6, 7);
+		    chart.AddPoint(cost);
+		    totalCost += cost;
+
+		    cost = qf.Union(7, 8);
+		    chart.AddPoint(cost);
+		    totalCost += cost;
+
+		    cost = qf.Union(5, 6);
+		    chart.AddPoint(cost);
+		    totalCost += cost;
+
+		    cost = qf.Union(0, 1);
+		    chart.AddPoint(cost);
+		    totalCost += cost;
+
+		    cost = qf.Union(1, 8);
+		    chart.AddPoint(cost);
+		    totalCost += cost;
+
+		    frame.add(chart);
+		    frame.setVisible(true);
+		}
+	});
     }
 }
