@@ -69,14 +69,17 @@ public class QuickFind{
                 Chart chart = new Chart();
 
                 Random randomGenerator = new Random();
+                System.out.print("Complete: 00%");
                 for (int i = 0; i < n; i++){
                     cost = qf.Union(randomGenerator.nextInt(n), randomGenerator.nextInt(n));
                     chart.AddPoint(cost);
                     totalCost += cost;
 
                     if (i % perPercent == 0)
-                        System.out.println("Processed: " + 100f * i / n + "%");
+                        System.out.printf("\b\b\b%02d%%", 100 * i / n);
                 }
+                
+                System.out.printf("\b\b\b100%%\nPainting..\n");
 
                 frame.add(chart);
                 frame.setVisible(true);
