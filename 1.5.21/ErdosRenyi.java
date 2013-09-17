@@ -19,6 +19,7 @@ public class ErdosRenyi{
 		}
 
 		System.out.printf("\nPairs: %d\n", Count(n));
+		System.out.printf("1/2 N lnN = %f\n", 0.5 * n * Math.log(n));
 	}
 	
 	public static int Count(int n){
